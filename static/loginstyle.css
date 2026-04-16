@@ -1,0 +1,112 @@
+/* --- СТИЛІ ДЛЯ СТОРІНОК LOGIN ТА REGISTER --- */
+
+/* Контейнер, який центрує форму на екрані */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Займає 80% висоти екрану */
+    padding: 20px;
+}
+
+/* Сама картка форми */
+.auth-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* М'яка тінь */
+    width: 100%;
+    max-width: 400px; /* Щоб форма не розповзалася */
+    text-align: center;
+    border: 1px solid #eaeaea;
+}
+
+/* Заголовки всередині форми */
+.auth-card h2 {
+    margin-bottom: 10px;
+    font-size: 28px;
+    color: #333;
+}
+
+.auth-subtitle {
+    color: #777;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* Стилізація полів вводу (username, password тощо) */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-sizing: border-box; /* Важливо, щоб input не вилазив за межі */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #2d3436; /* Колір при натисканні */
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Кнопка "Увійти" або "Зареєструватися" */
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background-color: #2d3436; /* Темний колір */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-auth:hover {
+    background-color: #000000;
+}
+
+/* Повідомлення про помилки (Django Messages) */
+.alert {
+    background-color: #fab1a0; /* Ніжно-червоний */
+    color: #d63031;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    border: 1px solid #ff7675;
+}
+
+/* Текст під формою (посилання на іншу сторінку) */
+.auth-footer {
+    margin-top: 25px;
+    font-size: 14px;
+    color: #636e72;
+}
+
+.auth-footer a {
+    color: #2d3436;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}

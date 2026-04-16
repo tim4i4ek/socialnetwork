@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_style %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="header-blur">
+    <div class="main-container">
+        <h1>Головна</h1>
+    </div>
+</div>
+
+<div class="main-container">
+    {% if user.is_authenticated %}
+    <!-- Генеруємо колір для тебе -->
+    {% with user_h=user.id|add:1|add:user.id|add:40 %}
+    <div class="create-post-box">
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+            <!-- CSS Аватарка замість картинки -->
+            <div class="avatar-circle" style="background-color: hsl({{ user_h }}, 70%, 80%);">
+                <span class="avatar-initials">{{ user.username|slice:":1"|upper }}</span>
+            </div>
+            <div class="post-meta-name" style="font-size: 14px;">{{ user.username }}</div>
+        </div>
+
+        <form method="POST" style="width: 100%;">
+            {% csrf_token %}
+            <textarea name="content" class="apple-input" placeholder="Що нового, {{ user.username }}?" rows="1" required></textarea>
+            <div class="action-row">
+                <button type="submit" class="apple-btn">Опублікувати</button>
+            </div>
+        </form>
+    </div>
+    {% endwith %}
+    {% endif %}
+
+    <div class="feed">
+        {% for post in posts %}
+        <!-- Колір для кожного автора -->
+        {% with author_h=post.author.id|add:1|add:post.author.id|add:40 %}
+        <div class="post-card" style="--user-color: hsl({{ author_h }}, 70%, 80%);">
+            <div class="post-header">
+    <a href="{% url 'profile' post.author.username %}" style="text-decoration: none;">
+        <div class="avatar-circle" style="background-color: var(--user-color);">
+            <span class="avatar-initials">{{ post.author.username|slice:":1"|upper }}</span>
+        </div>
+    </a>
+
+    <div>
+        <a href="{% url 'profile' post.author.username %}" style="text-decoration: none;">
+            <div class="post-meta-name" style="color: var(--text-main);">
+                {{ post.author.username|default:"Анонім" }}
+            </div>
+        </a>
+        <div class="post-meta-date">{{ post.date|date:"j E, H:i" }}</div>
+    </div>
+</div>
+            <div class="post-text">
+                {{ post.content|linebreaksbr }}
+            </div>
+        </div>
+        {% endwith %}
+        {% empty %}
+        <div style="text-align: center; padding: 50px; color: var(--text-muted);">
+            Тут поки що порожньо. Будь першим!
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    const tx = document.querySelector('.apple-input');
+    if (tx) {
+        tx.addEventListener("input", function() {
+            this.style.height = "auto";
+            this.style.height = (this.scrollHeight) + "px";
+            if (this.scrollHeight > 400) {
+                this.style.height = "400px";
+                this.style.overflowY = "scroll";
+            } else {
+                this.style.overflowY = "hidden";
+            }
+        }, false);
+    }
+</script>
+{% endblock %}

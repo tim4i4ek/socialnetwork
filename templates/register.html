@@ -1,0 +1,157 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <link rel="stylesheet" href="{% static 'loginstyle.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Реєстрація | CHILL</title>
+
+    <style>
+        /* Стилі для липкого хедера */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: rgba(255, 255, 255, 0.85); /* Ефект скла */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            font-size: 22px;
+            font-weight: 900;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            font-family: sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-item:hover {
+            color: #000;
+        }
+
+        .btn-signup-header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-signup-header:hover {
+            background-color: #444;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Відступ для контенту, щоб він не ховався за хедером */
+        .header-spacer {
+            height: 90px; /* Трохи більше за висоту хедера для повітря */
+        }
+
+        /* Приховуємо навігацію на маленьких екранах */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Хедер CHILL -->
+<header class="main-header">
+    <div class="header-container">
+        <div class="logo">
+            <a href="/">CHILL</a>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#" class="nav-item">Стрічка</a>
+            <a href="#" class="nav-item">Популярне</a>
+            <a href="#" class="nav-item">Спільноти</a>
+            <a href="#" class="nav-item">Медіа</a>
+            <a href="#" class="nav-item">Про нас</a>
+        </nav>
+
+        <div class="auth-buttons">
+            <a href="{% url 'register' %}" class="btn-signup-header">Приєднатися</a>
+        </div>
+    </div>
+</header>
+
+<!-- Простір під хедером -->
+<div class="header-spacer"></div>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <h2>Створити акаунт</h2>
+        <p class="auth-subtitle">Приєднуйся до спільноти</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert" style="color: red; margin-bottom: 15px; font-size: 14px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label>Нікнейм</label>
+                <input type="text" name="username" placeholder="Введіть нік" required>
+            </div>
+            <div class="input-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="example@mail.com" required>
+            </div>
+            <div class="input-group">
+                <label>Пароль</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <div class="input-group">
+                <label>Підтвердіть пароль</label>
+                <input type="password" name="password2" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-auth">Зареєструватися</button>
+        </form>
+        <p class="auth-footer">Вже маєте акаунт? <a href="{% url 'login' %}">Увійти</a></p>
+    </div>
+</div>
+
+</body>
+</html>

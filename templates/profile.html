@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ profile_user.username }} | CHILL{% endblock %}
+
+{% block extra_style %}
+<style>
+    /* Контейнер профілю */
+    .profile-wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 40px 20px;
+    }
+
+    /* Шапка профілю */
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .profile-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        overflow: hidden;
+        flex-shrink: 0;
+        border: 4px solid white;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .profile-info h1 {
+        margin: 0 0 10px 0;
+        font-size: 28px;
+        font-weight: 800;
+        color: #1a1a1a;
+    }
+
+    .profile-bio {
+        font-size: 16px;
+        color: #666;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .profile-stats {
+        display: flex;
+        gap: 20px;
+        font-size: 14px;
+        color: #888;
+    }
+
+    .stat-item b {
+        color: #333;
+    }
+
+    /* Кнопка редагування (якщо це мій профіль) */
+    .btn-edit {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 8px 20px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #555;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+
+    .btn-edit:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+    }
+
+    /* Стрічка постів в один ряд */
+    .profile-feed-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .post-card {
+        background: white;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        border: 1px solid #f0f0f0;
+    }
+
+    .post-date {
+        font-size: 12px;
+        color: #bbb;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .post-content {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #444;
+    }
+
+    .post-footer {
+        margin-top: 20px;
+        display: flex;
+        gap: 20px;
+    }
+
+    .action-btn {
+        background: none;
+        border: none;
+        color: #aaa;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+        .profile-header {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-wrapper">
+    <!-- Секція інформації -->
+    <div class="profile-header">
+        <div class="profile-avatar">
+            <img src="https://ui-avatars.com/api/?name={{ profile_user.username }}&size=200&background=random" alt="avatar">
+        </div>
+        <div class="profile-info">
+            <h1>{{ profile_user.username }}</h1>
+            <p class="profile-bio">
+                {% if profile_user.profile.bio %}
+                    {{ profile_user.profile.bio }}
+                {% else %}
+                    Цей чіллер ще нічого не розповів про себе. 🌿
+                {% endif %}
+            </p>
+            <div class="profile-stats">
+                <span class="stat-item"><b>{{ posts.count }}</b> постів</span>
+                <span class="stat-item"><b>124</b> підписників</span>
+            </div>
+            
+            {% if user == profile_user %}
+                <a href="#" class="btn-edit">Редагувати профіль</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Стрічка постів автора -->
+    <h2 class="profile-feed-title">Публікації</h2>
+    
+    <div class="profile-feed">
+        {% for post in posts %}
+            <div class="post-card">
+                <span class="post-date">{{ post.date|date:"d M Y" }}</span>
+                <div class="post-content">
+                    {{ post.content }}
+                </div>
+                <div class="post-footer">
+                    <button class="action-btn">❤️ {{ post.likes_count|default:"0" }}</button>
+                    <button class="action-btn">💬 Коментувати</button>
+                </div>
+            </div>
+        {% empty %}
+            <p style="color: #999; text-align: center;">Тут поки немає постів.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

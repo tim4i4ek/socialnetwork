@@ -1,0 +1,322 @@
+/* =========================================
+   ТЕМА: AURA CHILL (Ніжний мінімалізм)
+   ========================================= */
+
+:root {
+    /* Палітра "Ранковий туман" */
+    --bg-page: #F7F7F9;         /* Дуже м'який, ледь теплий біло-сірий */
+    --bg-card: #FFFFFF;         /* Абсолютно білі картки для контрасту */
+    --text-main: #2D2D31;       /* М'який чорний (не ріже очі) */
+    --text-muted: #8E8E93;      /* Класичний яблучний сірий для дат */
+
+    /* Акценти та градієнти */
+    --accent-blue: #007AFF;     /* Ніжний синій для кнопок */
+    --accent-hover: #0056b3;
+
+    /* Тіні - секрет "дорогого" дизайну */
+    --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+    --shadow-float: 0 14px 40px rgba(0, 0, 0, 0.08);
+    --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.02);
+
+    /* Структура */
+    --radius-huge: 32px;
+    --radius-card: 24px;
+    --radius-btn: 20px;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* -----------------------------------------
+   ГЛОБАЛЬНІ НАЛАШТУВАННЯ
+----------------------------------------- */
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Кастомний ніжний скроллбар */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.2); }
+
+/* -----------------------------------------
+   АНІМАЦІЇ (Додають життя сторінці)
+----------------------------------------- */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0.2); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 122, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 122, 255, 0); }
+}
+
+/* -----------------------------------------
+   ХЕДЕР (Скляний ефект)
+----------------------------------------- */
+.header-blur {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(247, 247, 249, 0.75); /* Напівпрозорий фон сторінки */
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+    transition: var(--transition-smooth);
+}
+
+.header-blur h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(90deg, #2D2D31, #5c5c61);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.8px;
+}
+
+.main-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* -----------------------------------------
+   КАРТКИ ПОСТІВ (Магія індивідуальності)
+----------------------------------------- */
+.post-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-card);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-soft);
+    animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    /* ТУТ МАГІЯ: Якщо змінна --user-color не задана, буде прозорий.
+       Ми задамо її в HTML! */
+    border-left: 6px solid var(--user-color, transparent);
+}
+
+.post-card:hover {
+    transform: translateY(-4px) scale(1.005);
+    box-shadow: var(--shadow-float);
+}
+
+/* Ніжний градієнтний відблиск на фоні картки при наведенні */
+.post-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top right, var(--user-color, transparent), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none; /* Щоб не заважало клікати */
+}
+.post-card:hover::before {
+    opacity: 0.05; /* Дуже-дуже ніжна підсвітка кута в колір юзера */
+}
+.post-meta-name:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.avatar-circle:hover {
+    transform: scale(1.05);
+    transition: 0.2s ease;
+}
+/* -----------------------------------------
+   ФОРМА СТВОРЕННЯ ПОСТА
+----------------------------------------- */
+.create-post-box {
+    background: var(--bg-card);
+    border-radius: var(--radius-huge);
+    padding: 24px; /* М'які відступи */
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-soft);
+    display: flex;
+    flex-direction: column; /* Змінюємо, щоб все було вертикально */
+    transition: var(--transition-smooth);
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.create-post-box:focus-within {
+    box-shadow: var(--shadow-float);
+    transform: translateY(-2px);
+    border-color: rgba(0, 122, 255, 0.1);
+}
+
+.input-row {
+    display: flex;
+    align-items: flex-start; /* Вирівнюємо по верху */
+    gap: 12px;
+    padding: 8px;
+    width: 100%; /* Займаємо всю ширину */
+}
+
+.apple-input {
+    width: 100%;
+    min-height: 48px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: var(--text-main);
+    resize: none;
+    overflow: hidden;
+    padding: 12px 0; /* Додаємо відступи зверху/знизу */
+    text-align: left; /* Текст починається зліва */
+}
+
+.apple-input::placeholder {
+    color: #C7C7CC;
+    font-weight: 400;
+}
+
+.action-row {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px; /* Відступ від поля вводу */
+    margin-top: 8px; /* Додатковий відступ */
+}
+
+/* -----------------------------------------
+   ЕЛЕМЕНТИ: Аватарки, Текст, Кнопки
+----------------------------------------- */
+.avatar-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); /* Ледь помітна межа */
+    transition: var(--transition-smooth);
+}
+
+.avatar-initials {
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    user-select: none;
+    /* Легка тінь під літерою для читабельності на світлих кольорах */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.post-card:hover .avatar-circle {
+    transform: scale(1.05);
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.post-meta-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-main);
+    letter-spacing: -0.3px;
+}
+
+.post-meta-date {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.post-text {
+    font-size: 17px;
+    line-height: 1.6;
+    color: #4A4A4E;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.apple-btn {
+    background: var(--accent-blue, #007AFF);
+    color: #FFFFFF;
+    border: none;
+    padding: 10px 24px;
+    border-radius: var(--radius-btn);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+}
+
+.apple-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 122, 255, 0.3);
+}
+
+.apple-btn:active {
+    transform: scale(0.96);
+}
+
+/* -----------------------------------------
+   СТОРІНКИ АВТОРИЗАЦІЇ (Логін/Реєстрація)
+----------------------------------------- */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #F7F7F9 0%, #E8E8ED 100%);
+}
+
+.auth-form-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-radius: var(--radius-huge);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: var(--shadow-float);
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.5);
+    animation: fadeUp 0.8s ease forwards;
+}
+
+.auth-input {
+    width: 100%;
+    background: rgba(0,0,0,0.03);
+    border: 1px solid transparent;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    font-size: 16px;
+    transition: var(--transition-smooth);
+    box-sizing: border-box;
+}
+
+.auth-input:focus {
+    background: #FFFFFF;
+    border-color: rgba(0, 122, 255, 0.3);
+    box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+    outline: none;
+}
+
+/* Затримка появи постів (Cascade effect) */
+.post-card:nth-child(1) { animation-delay: 0.1s; }
+.post-card:nth-child(2) { animation-delay: 0.2s; }
+.post-card:nth-child(3) { animation-delay: 0.3s; }
+.post-card:nth-child(4) { animation-delay: 0.4s; }
