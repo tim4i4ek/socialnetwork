@@ -7,11 +7,11 @@ venv/
 env/
 
 # Django
-db.sqlite3
+backend/db.sqlite3
 debug.log
 media/
 staticfiles/
-.env
+backend/.env
 
 # OS
 .DS_Store

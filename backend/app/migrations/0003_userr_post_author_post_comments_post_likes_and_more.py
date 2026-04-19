@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blogg', '0002_remove_post_slug'),
+        ('app', '0002_remove_post_slug'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
